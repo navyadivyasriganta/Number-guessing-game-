@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Number Guessing Game"
+description = "A polished responsive number guessing game with Python-powered game logic, progressive hints, scoring, and accessible controls."
+version = "1.0.0"
+id = "artifacts/number-guessing-game"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22924
+
+[services.development]
+run = "pnpm --filter @workspace/number-guessing-game run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/number-guessing-game", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/number-guessing-game/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22924"
+BASE_PATH = "/"
